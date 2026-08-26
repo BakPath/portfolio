@@ -20,10 +20,38 @@ const mono = JetBrains_Mono({
   weight: ['400', '500'],
 });
 
+// Las etiquetas Open Graph necesitan URLs absolutas, así que el dominio vive
+// aquí. Si cambia, hay que recompilar y volver a subir.
+const SITE_URL = 'https://bakpath.dev';
+
+const TITLE = 'BakPath - Nicolas Desarrollador';
+const DESCRIPTION =
+  'Portafolio de desarrollo especializado en integraciones de sistemas empresariales (POS, ERP, APIs) y automatización de procesos.';
+const OG_ALT =
+  'BakPath — Nicolas Baak, desarrollador de integraciones y automatizaciones';
+
 export const metadata: Metadata = {
-  title: 'BakPath - Nicolas Desarrollador',
-  description:
-    'Portafolio de desarrollo especializado en integraciones de sistemas empresariales (POS, ERP, APIs) y automatización de procesos.',
+  metadataBase: new URL(SITE_URL),
+  title: TITLE,
+  description: DESCRIPTION,
+  openGraph: {
+    title: TITLE,
+    description: DESCRIPTION,
+    url: SITE_URL,
+    siteName: 'BakPath',
+    locale: 'es_MX',
+    type: 'website',
+    // Se apunta al .png de public/ y no a la ruta opengraph-image de Next:
+    // esa genera un archivo sin extensión, y Apache lo serviría con el MIME
+    // type equivocado. Ver app/opengraph-image.tsx para regenerarlo.
+    images: [{ url: '/og.png', width: 1200, height: 630, alt: OG_ALT }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: TITLE,
+    description: DESCRIPTION,
+    images: [{ url: '/og.png', alt: OG_ALT }],
+  },
 };
 
 export default function RootLayout({

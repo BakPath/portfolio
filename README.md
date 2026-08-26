@@ -84,3 +84,13 @@ La config usa `trailingSlash: true`, así que cada ruta queda como
 sin optimizador de Next (`images.unoptimized`), porque ese requiere servidor.
 
 Para actualizar el sitio: `npm run build` y vuelve a subir `out/`.
+
+El dominio vive en `SITE_URL` (`app/layout.tsx`) porque las etiquetas Open Graph
+necesitan URLs absolutas. Si cambia, hay que recompilar.
+
+## Favicon e imagen de vista previa
+
+- `app/icon.png` — favicon, lo detecta Next por convención de nombre.
+- `public/og.png` — la tarjeta 1200×630 que muestran LinkedIn, WhatsApp y Slack.
+  Se generó con `scripts/og-image.tsx`; las instrucciones para regenerarla están
+  en el encabezado de ese archivo.
