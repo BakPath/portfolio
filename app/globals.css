@@ -1,0 +1,374 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --font-display: 'Space Grotesk', sans-serif;
+  --font-body: 'Inter', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  --ink: #070C15;
+  --surface: #0D1524;
+  --raised: #131D30;
+  --border: #1E2B40;
+  --primary: #E8ECF4;
+  --secondary: #93A3BF;
+  --pulse: #FF8A3D;
+  --live: #3ECF8E;
+}
+
+html {
+  scroll-behavior: smooth;
+  /* el nav fijo no debe tapar el título al saltar a una sección */
+  scroll-padding-top: 5.5rem;
+}
+
+body {
+  background-color: var(--ink);
+  color: var(--primary);
+}
+
+/* Capa de fondo: rejilla técnica que se desvanece hacia abajo.
+   Va en un pseudo-elemento fijo para que la máscara no afecte al contenido. */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(30, 43, 64, 0.55) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(30, 43, 64, 0.55) 1px, transparent 1px);
+  background-size: 56px 56px;
+  background-position: center -1px;
+  -webkit-mask-image: radial-gradient(120% 80% at 70% 0%, #000 0%, rgba(0,0,0,0.45) 45%, transparent 78%);
+  mask-image: radial-gradient(120% 80% at 70% 0%, #000 0%, rgba(0,0,0,0.45) 45%, transparent 78%);
+}
+
+/* Resplandor tenue tras el punto de sincronía del héroe */
+body::after {
+  content: '';
+  position: fixed;
+  top: -25vh;
+  right: -8vw;
+  width: 65vw;
+  height: 85vh;
+  z-index: -1;
+  pointer-events: none;
+  background: radial-gradient(closest-side, rgba(255, 138, 61, 0.11), transparent 72%);
+}
+
+/* ---------------------------------------------------------------
+   Riel de señal — el elemento firma.
+   Cada sección aporta un tramo de línea; al apilarse forman un
+   trazo continuo que recorre la página. El nodo se enciende cuando
+   la sección entra en pantalla.
+   --------------------------------------------------------------- */
+.rail {
+  position: relative;
+}
+
+.rail::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  transform: translateX(-50%);
+  background: var(--border);
+}
+
+.rail-node {
+  position: relative;
+  display: block;
+  top: 0.45rem;
+  margin: 0 auto;
+  width: 9px;
+  height: 9px;
+  border-radius: 999px;
+  background: var(--ink);
+  border: 1px solid var(--border);
+  transition: background-color 0.45s ease, border-color 0.45s ease, box-shadow 0.45s ease;
+}
+
+.is-visible .rail-node {
+  background: var(--pulse);
+  border-color: var(--pulse);
+  box-shadow: 0 0 0 4px rgba(255, 138, 61, 0.14);
+}
+
+/* Terminador: en la última sección la señal se desvanece en vez de cortarse */
+.rail-end::before {
+  background: linear-gradient(to bottom, var(--border) 0%, var(--border) 45%, transparent 100%);
+}
+
+/* --- Rótulo de sección: etiqueta honesta, sin numeración inventada --- */
+.node-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--secondary);
+}
+
+.node-label::after {
+  content: '';
+  height: 1px;
+  width: 32px;
+  background: linear-gradient(90deg, var(--pulse), transparent);
+  flex-shrink: 0;
+}
+
+/* --- Revelado al hacer scroll --- */
+.reveal {
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.is-visible.reveal,
+.is-visible .reveal {
+  opacity: 1;
+  transform: none;
+}
+
+/* escalona los hijos revelados dentro de una sección */
+.is-visible .reveal:nth-child(2) { transition-delay: 0.06s; }
+.is-visible .reveal:nth-child(3) { transition-delay: 0.12s; }
+.is-visible .reveal:nth-child(4) { transition-delay: 0.18s; }
+
+/* --- Escala tipográfica de titulares ---
+   Vive en CSS y no en tailwind.config para que el ajuste fino recargue
+   en caliente sin reiniciar el servidor. --- */
+.type-hero {
+  font-size: clamp(2.35rem, 5.1vw, 4rem);
+  line-height: 0.98;
+  letter-spacing: -0.035em;
+}
+
+.type-section {
+  font-size: clamp(1.6rem, 2.8vw, 2.25rem);
+  line-height: 1.1;
+  letter-spacing: -0.025em;
+}
+
+/* --- Regla fina reutilizable --- */
+.hairline {
+  height: 1px;
+  background: linear-gradient(90deg, var(--border), transparent);
+}
+
+::selection {
+  background: var(--pulse);
+  color: var(--ink);
+}
+
+:focus-visible {
+  outline: 2px solid var(--pulse);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+pre {
+  background: var(--surface) !important;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem 1.15rem;
+  overflow-x: auto;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  line-height: 1.65;
+}
+
+code {
+  font-family: var(--font-mono);
+}
+
+:not(pre) > code {
+  background: var(--raised);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.1em 0.38em;
+  font-size: 0.86em;
+  color: var(--primary);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* --- Indicador de estado en vivo --- */
+.live-dot {
+  position: relative;
+  display: inline-flex;
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+  background: var(--live);
+  flex-shrink: 0;
+}
+
+.live-dot::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 999px;
+  background: var(--live);
+  animation: live-ping 2.4s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+@keyframes live-ping {
+  0% { transform: scale(1); opacity: 0.55; }
+  70% { transform: scale(2.6); opacity: 0; }
+  100% { transform: scale(2.6); opacity: 0; }
+}
+
+/* --- Botones --- */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: 6px;
+  background: var(--pulse);
+  color: var(--ink);
+  padding: 0.7rem 1.25rem;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 24px -10px rgba(255, 138, 61, 0.7);
+}
+
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  color: var(--primary);
+  padding: 0.7rem 1.25rem;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  transition: border-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+
+.btn-ghost:hover {
+  border-color: var(--pulse);
+  color: var(--pulse);
+  transform: translateY(-1px);
+}
+
+/* ---------------------------------------------------------------
+   Tipografía de artículo — el MDX no lleva clases propias, así que
+   el estilo se aplica desde el contenedor .post
+   --------------------------------------------------------------- */
+.post {
+  color: var(--secondary);
+  font-size: 1.0625rem;
+  line-height: 1.75;
+}
+
+.post > * + * {
+  margin-top: 1.25rem;
+}
+
+.post h2 {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+  color: var(--primary);
+  margin-top: 3rem;
+  margin-bottom: 1rem;
+}
+
+.post h3 {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--primary);
+  margin-top: 2.25rem;
+  margin-bottom: 0.75rem;
+}
+
+.post strong {
+  color: var(--primary);
+  font-weight: 600;
+}
+
+.post a {
+  color: var(--pulse);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+}
+
+.post ul,
+.post ol {
+  padding-left: 1.35rem;
+}
+
+.post ul { list-style: disc; }
+.post ol { list-style: decimal; }
+
+.post li + li {
+  margin-top: 0.5rem;
+}
+
+.post li::marker {
+  color: var(--muted);
+}
+
+.post blockquote {
+  border-left: 2px solid var(--pulse);
+  padding-left: 1.15rem;
+  color: var(--primary);
+  font-style: normal;
+}
+
+.post table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.92rem;
+}
+
+.post th,
+.post td {
+  border: 1px solid var(--border);
+  padding: 0.6rem 0.8rem;
+  text-align: left;
+}
+
+.post th {
+  background: var(--surface);
+  color: var(--primary);
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}

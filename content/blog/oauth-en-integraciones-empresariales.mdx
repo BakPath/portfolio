@@ -1,0 +1,28 @@
+---
+title: "OAuth 2.0 en integraciones de sistemas empresariales: lo que nadie te explica la primera vez"
+date: "2026-08-01"
+excerpt: "Errores comunes al integrar APIs empresariales con OAuth y cómo evitarlos en entornos de producción."
+tags: ["OAuth", "APIs", "Integraciones"]
+---
+
+Cuando integras un sistema de punto de venta con una plataforma central, tarde o
+temprano te vas a topar con OAuth 2.0. Se ve simple en la documentación, pero hay
+detalles que solo aprendes resolviendo tickets en producción.
+
+## El problema típico
+
+La mayoría de las guías muestran el flujo ideal: pides un token, lo usas, listo.
+En la práctica, los tokens expiran a mitad de un proceso batch, o el sistema
+externo cambia sus scopes sin avisar.
+
+## Qué hacer distinto
+
+1. **No asumas que el token vive para siempre.** Implementa refresh automático
+   antes de que expire, no cuando falle.
+2. **Registra cada intercambio de token.** Cuando algo falla en producción, el
+   log del token es lo primero que revisas.
+3. **Aísla las credenciales por ambiente.** Sandbox y producción nunca deberían
+   compartir client secret.
+
+Con estas tres reglas, la mayoría de los dolores de cabeza de integración
+desaparecen antes de llegar a un caso de soporte.

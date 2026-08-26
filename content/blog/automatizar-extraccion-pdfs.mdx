@@ -1,0 +1,29 @@
+---
+title: "Cómo automatizar la extracción de datos de PDFs de facturas"
+date: "2026-07-10"
+excerpt: "Arquitectura básica para pasar de captura manual a un pipeline automático de extracción de facturas."
+tags: ["Automatización", "Python", "Procesos"]
+---
+
+Uno de los procesos manuales más comunes en cualquier empresa es la captura de
+datos de facturas que llegan por correo. Este es el esqueleto de una solución
+que automatiza ese flujo de principio a fin.
+
+## Arquitectura general
+
+```
+Correo entrante → Filtro de adjuntos PDF → Extracción de texto
+→ Validación de campos → Reporte estructurado
+```
+
+## Puntos clave
+
+- **Filtrado temprano**: no todos los PDFs adjuntos son facturas; valida por
+  remitente o patrón de asunto antes de procesar.
+- **Extracción tolerante a variaciones**: cada proveedor formatea su factura
+  distinto, así que el parser necesita reglas flexibles, no un template rígido.
+- **Reporte como salida, no como fin**: el reporte generado debería alimentar el
+  siguiente paso del proceso automáticamente, no quedarse como un archivo suelto.
+
+El resultado no es solo ahorrar tiempo de captura — es eliminar la variabilidad
+humana en un proceso que debería ser 100% predecible.
