@@ -28,6 +28,8 @@ npm start       # servir el build
 > Nota: no corras `build` con el servidor de desarrollo encendido — el build
 > sobrescribe `.next` y deja al dev server con caché inválida.
 
+`npm start` respeta la variable `PORT`, que es como lo levanta Hostinger.
+
 ## Estructura
 
 ```
@@ -70,20 +72,19 @@ Next lo detecta solo — no hay que registrar nada en código.
 
 ## Deploy (Hostinger)
 
-El sitio se exporta como HTML estático — no necesita Node en el servidor.
+Se despliega como aplicación Node.js desde este mismo repo, con la importación
+de Git de hPanel. Hostinger corre:
 
 ```bash
+npm install
 npm run build
+npm start        # next start, escucha en $PORT
 ```
 
-Eso genera la carpeta `out/`. Sube **el contenido** de `out/` (no la carpeta
-misma) a `public_html` en el File Manager o por FTP de Hostinger.
-
-La config usa `trailingSlash: true`, así que cada ruta queda como
-`carpeta/index.html` y Apache la sirve sin reglas de rewrite. Las imágenes van
-sin optimizador de Next (`images.unoptimized`), porque ese requiere servidor.
-
-Para actualizar el sitio: `npm run build` y vuelve a subir `out/`.
+Cada push a `main` vuelve a desplegar. Requiere un plan con soporte Node.js
+(mínimo 18.17, declarado en `engines` de package.json), y el repo tiene que ser
+público o tener acceso concedido a la app de Hostinger en GitHub → Settings →
+Applications.
 
 El dominio vive en `SITE_URL` (`app/layout.tsx`) porque las etiquetas Open Graph
 necesitan URLs absolutas. Si cambia, hay que recompilar.

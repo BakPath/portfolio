@@ -7,16 +7,11 @@ import rehypeHighlight from 'rehype-highlight';
 const nextConfig = {
   pageExtensions: ['js', 'jsx', 'mdx', 'ts', 'tsx'],
 
-  // Hosting estático (Hostinger): genera HTML plano en out/ en lugar de
-  // necesitar un servidor Node.
-  output: 'export',
+  // Se despliega como app Node en Hostinger (npm run build + npm start),
+  // así que no se usa output: 'export'.
 
-  // Cada ruta queda como carpeta/index.html para que Apache la sirva sin
-  // reglas de rewrite.
-  trailingSlash: true,
-
-  // El optimizador de imágenes de Next necesita servidor; en export se
-  // sirven tal cual (la foto ya viene comprimida a 23 KB).
+  // El optimizador de imágenes queda apagado a propósito: exige sharp en el
+  // servidor y la única foto ya pesa 23 KB, así que no aporta nada.
   images: { unoptimized: true },
 };
 
