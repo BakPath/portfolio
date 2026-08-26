@@ -68,6 +68,19 @@ Next lo detecta solo — no hay que registrar nada en código.
   `prefers-reduced-motion`.
 - El diagrama animado del hero (`components/SystemMap.tsx`) es SVG puro, sin librerías.
 
-## Deploy
+## Deploy (Hostinger)
 
-Desplegado en Vercel; cada push a `main` publica automáticamente.
+El sitio se exporta como HTML estático — no necesita Node en el servidor.
+
+```bash
+npm run build
+```
+
+Eso genera la carpeta `out/`. Sube **el contenido** de `out/` (no la carpeta
+misma) a `public_html` en el File Manager o por FTP de Hostinger.
+
+La config usa `trailingSlash: true`, así que cada ruta queda como
+`carpeta/index.html` y Apache la sirve sin reglas de rewrite. Las imágenes van
+sin optimizador de Next (`images.unoptimized`), porque ese requiere servidor.
+
+Para actualizar el sitio: `npm run build` y vuelve a subir `out/`.
