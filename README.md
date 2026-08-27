@@ -6,7 +6,7 @@ técnicas sobre lo que voy aprendiendo.
 
 ## Stack
 
-- **Next.js 14** (App Router, todo estático)
+- **Next.js 14** (App Router, servido como app Node)
 - **TypeScript**
 - **Tailwind CSS** con tokens de color propios
 - **MDX** para los artículos del blog
