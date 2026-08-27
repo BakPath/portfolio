@@ -1,12 +1,21 @@
 // Fuente de la imagen de vista previa (public/og.png).
 //
-// Vive fuera de app/ a propósito: como ruta de Next generaba un archivo sin
-// extensión, que Apache sirve con el MIME type equivocado y las vistas previas
-// de LinkedIn/WhatsApp rechazan.
+// Vive fuera de app/ a propósito: viene del tiempo del export estático, cuando
+// la ruta opengraph-image dejaba un archivo sin extensión que Apache servía con
+// el MIME type equivocado y las vistas previas de LinkedIn/WhatsApp rechazaban.
+// Se mantiene el .png en public/ porque ya funciona y no depende de cómo lo
+// sirva el host.
 //
-// Para regenerarla: mueve este archivo a app/opengraph-image.tsx, corre
-// `npm run build`, copia out/opengraph-image a public/og.png y vuelve a
-// sacarlo de app/.
+// Para regenerarla (procedimiento verificado: reproduce public/og.png byte a
+// byte):
+//
+//   cp scripts/og-image.tsx app/opengraph-image.tsx
+//   npm run dev
+//   curl -o public/og.png http://localhost:3000/opengraph-image
+//   rm app/opengraph-image.tsx
+//
+// El paso viejo por `out/opengraph-image` ya no aplica: ese directorio solo
+// existía con output: 'export', que se quitó al pasar a app Node.
 
 import { ImageResponse } from 'next/og';
 

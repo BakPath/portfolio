@@ -42,6 +42,7 @@ export default function BlogIndex() {
                   day: '2-digit',
                   month: 'short',
                   year: 'numeric',
+                  timeZone: 'UTC',
                 })}
               </time>
               <div>

@@ -28,6 +28,7 @@ export default function BlogPreview() {
                 day: '2-digit',
                 month: 'short',
                 year: 'numeric',
+                timeZone: 'UTC',
               })}
             </time>
             <div>

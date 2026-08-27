@@ -65,6 +65,7 @@ export default async function BlogPost({
                 day: '2-digit',
                 month: 'long',
                 year: 'numeric',
+                timeZone: 'UTC',
               })}
             </time>
             {(data.tags ?? []).map((tag: string) => (

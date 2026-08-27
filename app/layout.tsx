@@ -43,7 +43,7 @@ export const metadata: Metadata = {
     type: 'website',
     // Se apunta al .png de public/ y no a la ruta opengraph-image de Next:
     // esa genera un archivo sin extensión, y Apache lo serviría con el MIME
-    // type equivocado. Ver app/opengraph-image.tsx para regenerarlo.
+    // type equivocado. Ver scripts/og-image.tsx para regenerarlo.
     images: [{ url: '/og.png', width: 1200, height: 630, alt: OG_ALT }],
   },
   twitter: {

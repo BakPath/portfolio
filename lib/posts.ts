@@ -7,6 +7,9 @@ const POSTS_DIR = path.join(process.cwd(), 'content/blog');
 export type PostMeta = {
   slug: string;
   title: string;
+  /** Fecha ISO (YYYY-MM-DD) del front-matter. Se parsea como medianoche UTC,
+   *  así que hay que formatearla con timeZone: 'UTC' o retrocede un día en
+   *  zonas negativas. */
   date: string;
   excerpt: string;
   tags: string[];
