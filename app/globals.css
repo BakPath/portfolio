@@ -199,6 +199,73 @@ code {
   color: var(--primary);
 }
 
+/* ---------------------------------------------------------------
+   Tema de resaltado de sintaxis.
+
+   rehype-highlight (next.config.mjs) marca los tokens con clases
+   .hljs-*, pero no trae colores: sin una hoja de estilos los bloques
+   salen monocromos. En vez de importar un tema de highlight.js —que
+   llegaría con su propia paleta— se mapean los tokens a los mismos
+   tokens de color del sitio. Solo aplica a los bloques con lenguaje
+   declarado (```python); los que no lo declaran quedan en texto plano,
+   que es lo que se quiere para los diagramas ASCII.
+   --------------------------------------------------------------- */
+.hljs-comment,
+.hljs-quote {
+  color: var(--muted);
+  font-style: italic;
+}
+
+.hljs-keyword,
+.hljs-selector-tag,
+.hljs-literal,
+.hljs-type,
+.hljs-tag,
+.hljs-name,
+.hljs-doctag {
+  color: var(--pulse);
+}
+
+.hljs-string,
+.hljs-regexp,
+.hljs-addition,
+.hljs-attribute,
+.hljs-meta-string {
+  color: var(--live);
+}
+
+.hljs-number,
+.hljs-built_in,
+.hljs-symbol,
+.hljs-attr,
+.hljs-variable,
+.hljs-template-variable,
+.hljs-meta,
+.hljs-selector-attr,
+.hljs-selector-pseudo {
+  color: var(--secondary);
+}
+
+.hljs-title,
+.hljs-section,
+.hljs-selector-class,
+.hljs-selector-id {
+  color: var(--primary);
+  font-weight: 600;
+}
+
+.hljs-deletion {
+  color: #E86A5D;
+}
+
+.hljs-emphasis {
+  font-style: italic;
+}
+
+.hljs-strong {
+  font-weight: 600;
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
@@ -211,6 +278,13 @@ code {
   .reveal {
     opacity: 1;
     transform: none;
+  }
+  /* El diagrama del héroe se anima con SMIL (<animate>, <animateMotion>), que
+     no responde a las reglas de animation/transition de arriba. La única vía
+     desde CSS es sacar de escena los elementos que se mueven: quedan los
+     nodos, los trazos y el hub, que es lo que comunica el diagrama. */
+  .map-motion {
+    display: none;
   }
 }
 

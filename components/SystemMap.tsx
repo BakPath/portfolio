@@ -92,7 +92,13 @@ export default function SystemMap() {
 
       {/* paquetes de datos viajando por cada trazo */}
       {[...inputs, ...outputs].map((n, i) => (
-        <circle key={`pkt-${n.id}`} r="3" fill="#FF8A3D" opacity="0">
+        <circle
+          key={`pkt-${n.id}`}
+          className="map-motion"
+          r="3"
+          fill="#FF8A3D"
+          opacity="0"
+        >
           <animateMotion
             dur={`${2.8 + (i % 3) * 0.45}s`}
             begin={`${i * 0.5}s`}
@@ -131,6 +137,7 @@ export default function SystemMap() {
         strokeWidth="1.5"
       />
       <circle
+        className="map-motion"
         cx={HUB_X}
         cy={HUB_Y}
         r={HUB_R}
