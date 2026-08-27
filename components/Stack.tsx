@@ -7,7 +7,7 @@ const groups = [
   },
   {
     label: 'Sistemas empresariales',
-    items: ['Oracle Simphony', 'SAP Business ByDesign', 'EMC'],
+    items: ['Oracle Simphony', 'ERP', 'EMC'],
   },
   {
     label: 'Automatización',

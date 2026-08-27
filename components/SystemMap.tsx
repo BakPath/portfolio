@@ -6,7 +6,7 @@
 
 const inputs = [
   { id: 'pos', label: 'Simphony POS', y: 56 },
-  { id: 'sap', label: 'SAP ByD', y: 152 },
+  { id: 'erp', label: 'ERP', y: 152 },
   { id: 'api', label: 'API REST', y: 288 },
   { id: 'pdf', label: 'Facturas PDF', y: 384 },
 ];
@@ -68,7 +68,7 @@ export default function SystemMap() {
       viewBox="0 0 640 440"
       className="h-full w-full"
       role="img"
-      aria-label="Diagrama: Simphony POS, SAP Business ByDesign, API REST y facturas PDF convergen en un punto de sincronía que emite datos sincronizados y reportes."
+      aria-label="Diagrama: Simphony POS, ERP, API REST y facturas PDF convergen en un punto de sincronía que emite datos sincronizados y reportes."
     >
       <defs>
         {inputs.map((n) => (

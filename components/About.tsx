@@ -43,7 +43,7 @@ export default function About() {
           <p className="text-lg leading-relaxed text-secondary">
             Conecto plataformas de punto de venta{' '}
             <span className="text-primary">(Oracle Simphony)</span>, entornos{' '}
-            <span className="text-primary">SAP</span> y herramientas internas
+            <span className="text-primary">ERP</span> y herramientas internas
             para que la información se mueva automáticamente entre ellas — sin
             hojas de cálculo intermedias ni procesos manuales repetitivos.
           </p>

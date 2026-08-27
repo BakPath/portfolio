@@ -34,14 +34,14 @@ export const projects: Project[] = [
       'Eliminación de la captura manual y reportes consistentes disponibles de forma automática.',
   },
   {
-    slug: 'sap-byd-support',
-    title: 'Soporte e integraciones SAP Business ByDesign',
+    slug: 'erp-support',
+    title: 'Soporte e integraciones ERP',
     status: 'producción',
-    stack: ['SAP ByD', 'Integraciones', 'Soporte técnico'],
+    stack: ['ERP', 'Integraciones', 'Soporte técnico'],
     problem:
-      'Los procesos internos requerían que distintos módulos y sistemas externos se mantuvieran sincronizados con el entorno SAP.',
+      'Los procesos internos requerían que distintos módulos y sistemas externos se mantuvieran sincronizados con el entorno ERP.',
     solution:
-      'Soporte técnico continuo y desarrollo de integraciones entre SAP Business ByDesign y otras herramientas internas.',
+      'Soporte técnico continuo y desarrollo de integraciones entre el ERP y otras herramientas internas.',
     result:
       'Casos de soporte resueltos y sistemas manteniendo consistencia de datos entre plataformas.',
   },

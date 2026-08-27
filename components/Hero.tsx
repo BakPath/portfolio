@@ -3,7 +3,7 @@ import SystemMap from './SystemMap';
 /** Sistemas con los que trabaja — se listan bajo el héroe como firma técnica */
 const domains = [
   'Oracle Simphony',
-  'SAP Business ByDesign',
+  'ERP',
   'APIs REST',
   'OAuth 2.0',
   'Python',

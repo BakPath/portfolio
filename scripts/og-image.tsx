@@ -105,7 +105,7 @@ export default function OpengraphImage() {
           }}
         >
           <span style={{ color: SECONDARY }}>Nicolas Baak</span>
-          <span style={{ color: MUTED }}>Oracle Simphony · SAP · APIs REST</span>
+          <span style={{ color: MUTED }}>Oracle Simphony · ERP · APIs REST</span>
         </div>
       </div>
     ),

@@ -1,7 +1,7 @@
 # BakPath — Portafolio
 
 Sitio personal de **Nicolas Baak**, desarrollador de integraciones y automatizaciones.
-Casos de trabajo con Oracle Simphony, SAP Business ByDesign y APIs REST, más notas
+Casos de trabajo con Oracle Simphony, ERP y APIs REST, más notas
 técnicas sobre lo que voy aprendiendo.
 
 ## Stack
