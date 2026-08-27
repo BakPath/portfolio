@@ -1,12 +1,35 @@
+import type { Metadata } from 'next';
 import Link from 'next/link';
 import Nav from '@/components/Nav';
 import Footer from '@/components/Footer';
 import { getAllPosts } from '@/lib/posts';
+import { OG_ALT, OG_IMAGE, SITE_LOCALE, SITE_NAME } from '@/lib/site';
 
-export const metadata = {
-  title: 'Notas — BakPath',
-  description:
-    'Notas técnicas sobre integraciones, automatización y sistemas empresariales.',
+const TITULO = `Notas — ${SITE_NAME}`;
+const DESCRIPCION =
+  'Notas técnicas sobre integraciones, automatización y sistemas empresariales.';
+
+// Sin openGraph propio esta página heredaba la tarjeta del home, así que
+// compartir el enlace del blog mostraba la portada del portafolio.
+export const metadata: Metadata = {
+  title: TITULO,
+  description: DESCRIPCION,
+  alternates: { canonical: '/blog' },
+  openGraph: {
+    title: TITULO,
+    description: DESCRIPCION,
+    url: '/blog',
+    siteName: SITE_NAME,
+    locale: SITE_LOCALE,
+    type: 'website',
+    images: [{ url: OG_IMAGE, width: 1200, height: 630, alt: OG_ALT }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: TITULO,
+    description: DESCRIPCION,
+    images: [{ url: OG_IMAGE, alt: OG_ALT }],
+  },
 };
 
 export default function BlogIndex() {

@@ -1,5 +1,14 @@
 import type { Metadata } from 'next';
 import { Space_Grotesk, Inter, JetBrains_Mono } from 'next/font/google';
+import {
+  OG_ALT,
+  OG_IMAGE,
+  SITE_DESCRIPTION,
+  SITE_LOCALE,
+  SITE_NAME,
+  SITE_TITLE,
+  SITE_URL,
+} from '@/lib/site';
 import './globals.css';
 
 const display = Space_Grotesk({
@@ -20,37 +29,30 @@ const mono = JetBrains_Mono({
   weight: ['400', '500'],
 });
 
-// Las etiquetas Open Graph necesitan URLs absolutas, así que el dominio vive
-// aquí. Si cambia, hay que recompilar y volver a subir.
-const SITE_URL = 'https://bakpath.dev';
-
-const TITLE = 'BakPath - Nicolas Desarrollador';
-const DESCRIPTION =
-  'Portafolio de desarrollo especializado en integraciones de sistemas empresariales (POS, ERP, APIs) y automatización de procesos.';
-const OG_ALT =
-  'BakPath — Nicolas Baak, desarrollador de integraciones y automatizaciones';
-
+// metadataBase se declara una sola vez acá: es lo que deja que las páginas
+// hijas den rutas relativas (canonical, og:url) y Next las resuelva absolutas.
+//
+// Ojo: lo que se ponga acá lo heredan las páginas que no lo sobreescriban, así
+// que el canonical NO va en el layout —apuntaría todas las rutas al home—. Cada
+// página declara el suyo.
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
-  title: TITLE,
-  description: DESCRIPTION,
+  title: SITE_TITLE,
+  description: SITE_DESCRIPTION,
   openGraph: {
-    title: TITLE,
-    description: DESCRIPTION,
-    url: SITE_URL,
-    siteName: 'BakPath',
-    locale: 'es_MX',
+    title: SITE_TITLE,
+    description: SITE_DESCRIPTION,
+    url: '/',
+    siteName: SITE_NAME,
+    locale: SITE_LOCALE,
     type: 'website',
-    // Se apunta al .png de public/ y no a la ruta opengraph-image de Next:
-    // esa genera un archivo sin extensión, y Apache lo serviría con el MIME
-    // type equivocado. Ver scripts/og-image.tsx para regenerarlo.
-    images: [{ url: '/og.png', width: 1200, height: 630, alt: OG_ALT }],
+    images: [{ url: OG_IMAGE, width: 1200, height: 630, alt: OG_ALT }],
   },
   twitter: {
     card: 'summary_large_image',
-    title: TITLE,
-    description: DESCRIPTION,
-    images: [{ url: '/og.png', alt: OG_ALT }],
+    title: SITE_TITLE,
+    description: SITE_DESCRIPTION,
+    images: [{ url: OG_IMAGE, alt: OG_ALT }],
   },
 };
 

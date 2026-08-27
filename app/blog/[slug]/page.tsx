@@ -1,25 +1,52 @@
+import type { Metadata } from 'next';
 import Link from 'next/link';
 import Nav from '@/components/Nav';
 import Footer from '@/components/Footer';
-import { getPostSlugs } from '@/lib/posts';
-import matter from 'gray-matter';
-import fs from 'fs';
-import path from 'path';
+import { getPost, getPostSlugs } from '@/lib/posts';
+import { OG_ALT, OG_IMAGE, SITE_LOCALE, SITE_NAME } from '@/lib/site';
 import { notFound } from 'next/navigation';
 
 export function generateStaticParams() {
   return getPostSlugs().map((slug) => ({ slug }));
 }
 
+// Los posts son archivos en el repo: fuera de los que generateStaticParams
+// devuelve no hay nada que renderizar, así que un slug desconocido va directo
+// al 404 en vez de intentar un render en el servidor.
+export const dynamicParams = false;
+
 export async function generateMetadata({
   params,
 }: {
   params: { slug: string };
-}) {
-  const filePath = path.join(process.cwd(), 'content/blog', `${params.slug}.mdx`);
-  if (!fs.existsSync(filePath)) return {};
-  const { data } = matter(fs.readFileSync(filePath, 'utf8'));
-  return { title: `${data.title} — BakPath`, description: data.excerpt };
+}): Promise<Metadata> {
+  const post = getPost(params.slug);
+  if (!post) return {};
+
+  const url = `/blog/${post.slug}`;
+
+  return {
+    title: `${post.title} — ${SITE_NAME}`,
+    description: post.excerpt,
+    alternates: { canonical: url },
+    openGraph: {
+      title: post.title,
+      description: post.excerpt,
+      url,
+      siteName: SITE_NAME,
+      locale: SITE_LOCALE,
+      type: 'article',
+      publishedTime: post.date,
+      tags: post.tags,
+      images: [{ url: OG_IMAGE, width: 1200, height: 630, alt: OG_ALT }],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: post.title,
+      description: post.excerpt,
+      images: [{ url: OG_IMAGE, alt: OG_ALT }],
+    },
+  };
 }
 
 export default async function BlogPost({
@@ -27,14 +54,11 @@ export default async function BlogPost({
 }: {
   params: { slug: string };
 }) {
-  const filePath = path.join(process.cwd(), 'content/blog', `${params.slug}.mdx`);
+  const data = getPost(params.slug);
 
-  if (!fs.existsSync(filePath)) {
+  if (!data) {
     notFound();
   }
-
-  const source = fs.readFileSync(filePath, 'utf8');
-  const { data } = matter(source);
 
   // @next/mdx permite importar el archivo .mdx directamente como componente
   const { default: PostContent } = await import(
@@ -68,7 +92,7 @@ export default async function BlogPost({
                 timeZone: 'UTC',
               })}
             </time>
-            {(data.tags ?? []).map((tag: string) => (
+            {data.tags.map((tag) => (
               <span
                 key={tag}
                 className="rounded border border-border bg-surface px-2 py-0.5 font-mono text-[11px] text-muted"
