@@ -18,9 +18,10 @@ export const dynamicParams = false;
 export async function generateMetadata({
   params,
 }: {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
-  const post = getPost(params.slug);
+  const { slug } = await params;
+  const post = getPost(slug);
   if (!post) return {};
 
   const url = `/blog/${post.slug}`;
@@ -52,9 +53,10 @@ export async function generateMetadata({
 export default async function BlogPost({
   params,
 }: {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }) {
-  const data = getPost(params.slug);
+  const { slug } = await params;
+  const data = getPost(slug);
 
   if (!data) {
     notFound();
@@ -62,7 +64,7 @@ export default async function BlogPost({
 
   // @next/mdx permite importar el archivo .mdx directamente como componente
   const { default: PostContent } = await import(
-    `@/content/blog/${params.slug}.mdx`
+    `@/content/blog/${slug}.mdx`
   );
 
   return (
