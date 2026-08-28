@@ -1,7 +1,4 @@
 import createMDX from '@next/mdx';
-import remarkGfm from 'remark-gfm';
-import remarkFrontmatter from 'remark-frontmatter';
-import rehypeHighlight from 'rehype-highlight';
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -15,10 +12,14 @@ const nextConfig = {
   images: { unoptimized: true },
 };
 
+// Los plugins van por nombre y no importados: desde Next 16 el build usa
+// Turbopack, que serializa las opciones del loader para repartirlas entre
+// procesos, y una función importada no es serializable. Turbopack los
+// resuelve por su cuenta a partir del string.
 const withMDX = createMDX({
   options: {
-    remarkPlugins: [remarkFrontmatter, remarkGfm],
-    rehypePlugins: [rehypeHighlight],
+    remarkPlugins: [['remark-frontmatter'], ['remark-gfm']],
+    rehypePlugins: [['rehype-highlight']],
   },
 });
 
