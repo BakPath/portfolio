@@ -30,10 +30,12 @@ export default function Section({
     const el = ref.current;
     if (!el) return;
 
-    // Sin soporte de observer, mostramos el contenido sin animación
+    // Sin soporte de observer, mostramos el contenido sin animación. El
+    // cambio de estado va en el frame siguiente y no en el cuerpo del efecto
+    // para no encadenar un segundo render sincrónico apenas monta.
     if (typeof IntersectionObserver === 'undefined') {
-      setVisible(true);
-      return;
+      const frame = requestAnimationFrame(() => setVisible(true));
+      return () => cancelAnimationFrame(frame);
     }
 
     const io = new IntersectionObserver(
