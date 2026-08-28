@@ -80,7 +80,7 @@ export default function BlogIndex() {
                     {post.tags.map((tag) => (
                       <span
                         key={tag}
-                        className="rounded border border-border bg-surface px-2 py-0.5 font-mono text-[11px] text-muted"
+                        className="rounded-sm border border-border bg-surface px-2 py-0.5 font-mono text-[11px] text-muted"
                       >
                         {tag}
                       </span>

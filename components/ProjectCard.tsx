@@ -34,7 +34,7 @@ function StackTags({ items }: { items: string[] }) {
       {items.map((s) => (
         <span
           key={s}
-          className="rounded border border-border bg-ink/40 px-2 py-0.5 font-mono text-[11px] text-secondary"
+          className="rounded-sm border border-border bg-ink/40 px-2 py-0.5 font-mono text-[11px] text-secondary"
         >
           {s}
         </span>
@@ -59,7 +59,7 @@ export default function ProjectCard({
       {/* filo superior que se enciende al pasar el cursor */}
       <span
         aria-hidden="true"
-        className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-pulse to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-70"
+        className="absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-pulse to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-70"
       />
 
       {featured ? (

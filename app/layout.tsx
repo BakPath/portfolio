@@ -13,19 +13,19 @@ import './globals.css';
 
 const display = Space_Grotesk({
   subsets: ['latin'],
-  variable: '--font-display',
+  variable: '--ff-display',
   weight: ['500', '600', '700'],
 });
 
 const body = Inter({
   subsets: ['latin'],
-  variable: '--font-body',
+  variable: '--ff-body',
   weight: ['400', '500', '600'],
 });
 
 const mono = JetBrains_Mono({
   subsets: ['latin'],
-  variable: '--font-mono',
+  variable: '--ff-mono',
   weight: ['400', '500'],
 });
 

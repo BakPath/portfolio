@@ -1,11 +1,53 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
+
+@theme {
+  --color-ink: #070c15;
+  --color-surface: #0d1524;
+  --color-raised: #131d30;
+  --color-border: #1e2b40;
+  --color-primary: #e8ecf4;
+  --color-secondary: #93a3bf;
+  --color-muted: #5f6e8a;
+  --color-pulse: #ff8a3d;
+  --color-live: #3ecf8e;
+
+  --container-shell: 78rem;
+}
+
+/* next/font inyecta las familias como --ff-* y no como --font-*, que es el
+   namespace que Tailwind 4 usa para las claves del tema: si compartieran
+   nombre, la variable que @theme emite en :root se apuntaría a sí misma y
+   quedaría inválida. Con los nombres separados, --font-display sigue siendo
+   la clave que genera la utilidad `font-display` y además resuelve bien
+   cuando el CSS de más abajo la usa directo en font-family. */
+@theme inline {
+  --font-display: var(--ff-display), sans-serif;
+  --font-body: var(--ff-body), sans-serif;
+  --font-mono: var(--ff-mono), monospace;
+}
+
+/*
+  The default border color has changed to `currentcolor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentcolor);
+  }
+}
 
 :root {
-  --font-display: 'Space Grotesk', sans-serif;
-  --font-body: 'Inter', sans-serif;
-  --font-mono: 'JetBrains Mono', monospace;
+  --ff-display: 'Space Grotesk', sans-serif;
+  --ff-body: 'Inter', sans-serif;
+  --ff-mono: 'JetBrains Mono', monospace;
 
   --ink: #070C15;
   --surface: #0D1524;
